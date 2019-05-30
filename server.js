@@ -25,9 +25,9 @@ server.use(helmet());
 server.use(logger('dev'));
 
 
-//#######->  custom middleware
+//#######->  custom local middleware
 server.use(myLogger);
-
+server.use(addName);
 
 // Postsrouter endpoint called out
 // server.use('api/posts', PostsRouter);  // Noooooo, not this.....
@@ -36,7 +36,12 @@ server.use('/users', UsersRouter);
 
 
 server.get('/', (req, res) => {
-  res.send(`<h2>Routes and custom middleware !</h2>`)
+  const nameInsert = (req.name ? `${req.name}` : '');  // NEWLY ADDED, middle will help!!!
+  
+  res.send(`<h2>Routes and custom middleware !</h2>
+    <h2>Lambda Hubs API</h2>
+    <p>Welcome ${nameInsert} to the Lambda Hubs API</p>      
+  `);
 });
 
 
@@ -74,5 +79,14 @@ async function myValidateUserId(req, res, next){
         res.status(500).json({ message: 'Failed to process request'});
     } 
 };
+
+
+/// some extra custome middleware
+function addName(req, res, next) {
+  req.name = req.name || "Allison";
+  next();
+};
+
+
 
 module.exports = server;
