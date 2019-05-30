@@ -1,7 +1,14 @@
+// GOES FIRST !!!!!!!!!!!!
+require('dotenv').config();
+
 // code away! 
 // IMPORTS server.js
+
+
+
 const server = require('./server.js');
-const port = 4006;  
+// make port DYNAMIC
+const port = process.env.PORT || 4008;
 
 
 
