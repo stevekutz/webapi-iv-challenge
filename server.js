@@ -83,7 +83,7 @@ async function myValidateUserId(req, res, next){
 
 /// some extra custome middleware
 function addName(req, res, next) {
-  req.name = req.name || "Allison";
+  req.name = req.name || "future wife Allison";
   next();
 };
 
