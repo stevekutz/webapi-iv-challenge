@@ -4,6 +4,7 @@ module.exports = {
     useNullAsDefault: true,
     connection: {
       filename: './data/blog.db3',
+      filename: './data/shoutouts.db3',
     },
     pool: {
       afterCreate: (conn, done) => {

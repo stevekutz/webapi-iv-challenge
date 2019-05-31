@@ -41,7 +41,7 @@ router.get('/:id', async (req, res) => {
     }
   });
 
-  // ADD new post 
+  // ADD new post   // WANTS a 'user_id' field in body as well as 'text'
   router.post('/', validatePost, async (req, res) => {
     
     const newPost = req.body;  

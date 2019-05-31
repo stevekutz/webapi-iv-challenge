@@ -8,7 +8,8 @@ const logger = require('morgan');  // logger thingy
 const PostsRouter = require('./posts/postRouter');
 const UsersRouter = require('./users/userRouter');
 
-
+// STRETCH PART for env var and shoutout
+const db = require('./data/db.js');
 
 const server = express();
 
