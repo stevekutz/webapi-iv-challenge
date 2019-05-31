@@ -35,16 +35,41 @@ server.use('/posts', PostsRouter);    // but this.....
 server.use('/users', UsersRouter);
 
 
-server.get('/', (req, res) => {
-  const nameInsert = (req.name ? `${req.name}` : '');  // NEWLY ADDED, middle will help!!!
-  
-  res.send(`<h2>Routes and custom middleware !</h2>
-    <h2>Lambda Hubs API</h2>
-    <p>Welcome ${nameInsert} to the Lambda Hubs API</p>      
-  `);
+server.get('/', async (req, res) => {
+
+  try{
+    const shoutouts = await db('shoutouts');
+    const nameInsert = (req.name ? `${req.name}` : '');  // NEWLY ADDED, middle will help!!!
+
+    res.status(200).json({
+      messageOfTheDay: process.env.MOTD,
+      shoutouts,
+    });
+
+    res.send(`<h2>Routes and custom middleware !</h2>
+      <h2>Lambda Hubs API</h2>
+      <p>Welcome ${nameInsert} to the Lambda Hubs API</p>      
+    `);
+
+  } catch (error) {
+    console.error('\nERROR', error);
+    res.status(500).json({ error: 'Cannot retrieve the shoutouts' });
+  }
+
+
 });
 
+server.post('/', async (req, res) => {
+  try {
+    const [id] = await db('shoutouts').insert(req.body);
+    const shoutouts = await db('shoutouts');
 
+    res.status(201).json(shoutouts);
+  } catch (error) {
+    console.error('\nERROR', error);
+    res.status(500).json({ error: 'Cannot add the shoutout' });
+  }
+});
 
 
 
