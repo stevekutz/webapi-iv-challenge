@@ -9,7 +9,7 @@ const PostsRouter = require('./posts/postRouter');
 const UsersRouter = require('./users/userRouter');
 
 // STRETCH PART for env var and shoutout
-const db = require('./data/db.js');
+ const db = require('./data/db.js');
 
 const server = express();
 
@@ -41,16 +41,19 @@ server.get('/', async (req, res) => {
   try{
     const shoutouts = await db('shoutouts');
     const nameInsert = (req.name ? `${req.name}` : '');  // NEWLY ADDED, middle will help!!!
+  
+ /*   
+    res.send(`<h2>Routes and custom middleware !</h2>
+      <h2>Lambda Hubs API</h2>
+      <p>Welcome ${nameInsert} to the Lambda Hubs API</p>      
+    `)
+ */ 
 
     res.status(200).json({
       messageOfTheDay: process.env.MOTD,
       shoutouts,
     });
 
-    res.send(`<h2>Routes and custom middleware !</h2>
-      <h2>Lambda Hubs API</h2>
-      <p>Welcome ${nameInsert} to the Lambda Hubs API</p>      
-    `);
 
   } catch (error) {
     console.error('\nERROR', error);
